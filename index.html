@@ -1,0 +1,242 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Tai Chi Helper</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css" />
+		<link rel="stylesheet" href="vendor/waves/waves.min.css" />
+		<link rel="stylesheet" href="vendor/wow/animate.css" />
+		<link rel="stylesheet" href="css/nativedroid2.css" />
+		<link rel="stylesheet" href="css/tai-chi-helper.css" />
+
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	</head>
+	<body>
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-82069629-1', 'auto');
+		  ga('send', 'pageview');
+		</script>
+		<style>
+		.centered { margin: auto; display: block;}
+		div.timer
+		{
+			margin: auto;
+			width: 8em;
+			text-align: center;
+			font-size: xx-large;
+		}
+		</style>
+		
+		<div data-role="page" id="welcome">
+			<div data-role="header" data-position="fixed">
+				<h1>Swimming Dragon</h1>
+			</div>
+			<div role="main" class="ui-content">
+				<div role="main" class="ui-content" data-inset="false">
+
+					<!-- Simple Card !-->
+	
+					<div class="nd2-card">
+						<div class="card-media">
+							<img src="/img/Dragon.jpg">
+						</div>
+						<div class="card-supporting-text">
+							<p>
+								Welcome to the Swimming Dragon WebApp. I've developed this as part of the Mei Quan Dragon challenge.
+							</p><p> 
+								This application enables you to gauge the tilt of your hand during the Swimming Dragon exercise using your phone. 
+								The phone will run a timed session and provide you with statistics. 
+							</p><p>
+								To begin, tap on the Tai Chi wheel.
+								You'll have 5 seconds to prepare. Once you hear the gong, commence swimming. 
+								If you hear the sound of water, it indicates excessive tilting of your hand.
+								The gong will ring again upon completion of the exercise measurement. 
+								You will be presented with various statistics regarding the training you've just completed. 
+							</p></p> 
+								 Feel free to adjust the sensitivity of the tilt and the expected exercise duration in the config section.
+							</p><p>
+								<b>It's important to note that I do not assume any responsibility in case of a dropped phone.</b>
+								Please ensure you perform this activity on a soft surface, and most importantly, <b>have fun!</b>
+							</p>
+							<a href="#swimming-dragon" class="ui-btn ui-btn-raised clr-primary">I agree</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div data-role="page" id="home">
+			<div data-role="panel" id="h-panel" data-display="overlay" data-position-fixed="true" >
+				<nd2-include data-src="panel.left.html"></nd2-include>
+			</div>
+			<div data-role="header" data-position="fixed">
+				<a href="#config" class="ui-btn ui-btn-right" ><i class="zmdi zmdi-more-vert"></i></a>
+				<a href="#h-panel" class="ui-btn ui-btn-left" ><i class="zmdi zmdi-menu"></i></a>
+				<h1>Tai Chi Helper</h1>
+			</div>
+			<div role="main" class="ui-content">
+				<div id="logo"></div>
+			</div>
+		</div>
+		<div data-role="page" id="swimming-dragon">
+			<div data-role="panel" id="sd-panel" data-display="overlay" data-position-fixed="true" >
+				<nd2-include data-src="panel.left.html"></nd2-include>
+			</div>
+			<div data-role="header" data-position="fixed">
+				<a href="#config" class="ui-btn ui-btn-right" ><i class="zmdi zmdi-more-vert"></i></a>
+				<a href="#sd-panel" class="ui-btn ui-btn-left" ><i class="zmdi zmdi-menu"></i></a>
+				<h1>Swimming Dragon</h1>
+			</div>
+			<div role="main" class="ui-content">
+				<div id="buttons" style="display: none;">
+					<a href="#" id="switch-stats" class="scb"><img src="img/Summary.png"/></a>
+					<a href="#" id="switch-linear"class="scb"><img src="img/Linear.png"/></a>
+					<a href="#" id="switch-polar" class="scb"><img src="img/Polar.png"/></a>
+					<a href="#" id="switch-beta" class="scb"><img src="img/Beta.png"/></a>
+					<a href="#" id="switch-gamma" class="scb"><img src="img/Gamma.png"/></a>
+					<a href="#" id="restart" class="scb"><img src="img/Restart.png"/></a>
+				</div>
+				<div id="sd-spinner" style="display: none;"></div>
+				<div id="graphs" style="display: none;"></div>
+				<div id="stats">
+					<table class="stats" id="gradient-style">
+						<tr><th>Stats</th><th>Pitch</th><th>Roll</th></tr>
+						<tr class="min"><td><strong>Min</strong></td><td class="b"></td><td class="g"></tr>
+						<tr class="max"><td><strong>Max</strong></td><td class="b"></td><td class="g"></tr>
+						<tr class="avg"><td><strong>Avg</strong></td><td class="b"></td><td class="g"></tr>
+						<tr class="aavg"><td><strong>Abs Avg</strong></td><td class="b"></td><td class="g"></tr>
+						<tr class="sd"><td><strong>Std. Dev</strong></td><td class="b"></td><td class="g"></tr>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div data-role="page" id="config">
+			<div data-role="panel" id="c-panel" data-display="overlay" data-position-fixed="true" >
+				<nd2-include data-src="panel.left.html"></nd2-include>
+			</div>
+			<div data-role="header" data-position="fixed">
+				<a href="#c-panel" class="ui-btn ui-btn-left" ><i class="zmdi zmdi-menu"></i></a>
+				<h1>Tai Chi Helper : Config</h1>
+			</div>
+			<div role="main" class="ui-content">
+				<form>
+					<div data-rolexx="collapsible" data-inset="false">
+						<h4>Swimming Dragon</h4>
+						<label for="sd-dur">Max Duration:</label><input type="range" name="sd-dur" id="sd-dur" value="2" min="1" max="5" data-highlight="true">
+						<div data-role='rangeslider'>
+							<label for='rangeslider1a'>Tilt:</label><input type='range' name='sd-mn' id='sd-mn' min='1' max='90' value='10'>
+							<label for='rangeslider1b'>Tilt:</label><input type='range' name='sd-mx' id='sd-mx' min='1' max='90' value='45'>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div data-role="page" id="about">
+			<div data-role="panel" id="a-panel" data-display="overlay" data-position-fixed="true" >
+				<nd2-include data-src="panel.left.html"></nd2-include>
+			</div>
+			<div data-role="header" data-position="fixed">
+				<a href="#a-panel" class="ui-btn ui-btn-left" ><i class="zmdi zmdi-menu"></i></a>
+				<h1>Tai Chi Helper : About</h1>
+			</div>
+			<div role="main" class="ui-content">
+				<p>
+					<b>Author: </b> Chris Davies<br />
+					<b>Git Repository: </b><a href="https://github.com/slowglass/TaiChiHelper">https://github.com/slowglass/TaiChiHelper-JQueryMobile</a><br />
+					<b>Issues list: </b><a href="https://github.com/slowglass/TaiChiHelper/issues">https://github.com/slowglass/TaiChiHelper-JQueryMobil/issues</a><br />
+				</p>
+			</div>
+		</div>
+
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+		<script src="//d3js.org/d3.v3.min.js"></script>
+		<script src="vendor/waves/waves.min.js"></script>
+		<script src="vendor/wow/wow.min.js"></script>
+		<script src="js/config/nd2settings.js"></script>
+		<script src="js/nativedroid2.js"></script>
+		<script src="js/howler2.js"></script>
+		<script src="js/yin-yang.js"></script>
+		<script src="js/multi-timer.js"></script>
+		<script src="js/swimming-dragon.js"></script>
+		<script src="js/spill.js"></script>
+		<script src="js/debug.js"></script>
+		<script src="js/config.js"></script>
+		<script src="js/wake-lock.js"></script>
+		<style>
+		.scb img { width: 52px; height: 52px;}
+		</style>
+		<script>
+			var debug=new Debug("#debug_opts");
+			var timer=new MultiTimer("#ss-spinner")
+			var logo=new YinYang("#logo", "#c0f", "#004");
+			var sd=new SwimmingDragon("#sd-spinner");
+			var config=new Config(timer, sd);
+			debug.set("Index", true);
+
+			$('#logo path:eq(0)').on("click", function() { $("body").pagecontainer( "change", "#swimming-dragon"); });
+			$('#logo path:eq(1)').on("click", function() { $("body").pagecontainer( "change", "#swimming-dragon"); });
+			//$('#logo path:eq(1)').on("click", function() { $("body").pagecontainer( "change", "#standing-stake"); });
+			$( document ).ready(function() {
+				var href=$(location).attr('href').split("#");
+				if (href.length>1)
+					window.location.replace(href[0])
+   				console.log( "ready!  "  +$(location).attr('href') );
+			});
+			$("body").on("pagecontainerbeforechange", function(e, ui) {
+				if (!ui.toPage instanceof jQuery) return;
+				if (ui.prevPage instanceof jQuery)
+				{
+					debug.log("Index", "Stopping " + ui.prevPage.attr("id"));
+					switch (ui.prevPage.attr("id"))
+					{
+						case "home":
+							break;
+						case "welcome": 
+							break;
+						case "standing-stake":
+							timer.stop();
+							break;
+						case "swimming-dragon":
+							sd.reset();
+							break;
+						case "config":
+							break;
+					}
+				}
+				if (ui.toPage instanceof jQuery)
+				{
+					debug.log("Index", "Starting " + ui.toPage.attr("id"));
+					switch (ui.toPage.attr("id"))
+					{
+						case "home":
+							break;
+						case "welcome": 
+							break;
+						case "standing-stake":
+							timer.stop();
+							break;
+						case "swimming-dragon":
+							sd.reset();
+							break;
+						case "config":
+							config.bind();
+							break;
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
