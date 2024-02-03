@@ -223,13 +223,13 @@
 
 			function handleOrientation(e) {
 				var currentTS = Date.now();
-				if ((currentTS-ts)<1000)
+				if ((currentTS-ts)<300)
 					return;
 				ts = currentTS
 				$("#phone-test-result2").html("Read data from Accelerometer:"+
-									"<br />Alpha:" +event.alpha +
-									"<br />Beta:" +event.beta +
-									"<br />Gamma:" +event.gamma
+									"<br />Yaw:" +parseFloat(event.alpha).toFixed(2) +
+									"<br />Roll:" +parseFloat(event.beta).toFixed(2) +
+									"<br />Pitch:" +parseFloat(event.gamma).toFixed(2)
 				);
 			}
 			function requestDeviceOrientation () {
@@ -245,9 +245,9 @@
 					});
 				} 
 				$("#phone-test-result2").html("Read data from Accelerometer:"+
-									"<br />Alpha:" +null +
-									"<br />Beta:" +null +
-									"<br />Gamma:" +null
+									"<br />Yaw:" +null +
+									"<br />Roll:" +null +
+									"<br />Pitch:" +null
 				);
 				window.addEventListener("deviceorientation", handleOrientation, true);
 			}
