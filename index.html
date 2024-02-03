@@ -70,24 +70,10 @@
 							<a href="#swimming-dragon" class="ui-btn ui-btn-raised clr-primary">I agree</a>
 						</div>
 					</div>
-					<div class="nd2-card">
-						<div class="card-media">
-							<img src="img/Dragon.jpg">
-						</div>
-						<div class="card-supporting-text">
-							<p>Phone Accelerometer tester</b>
-							</p>
-							<div id="phone-test-result">
-							</div>
-							<div id="phone-test-result2">
-							</div>
-							<a name="test-phone" class="ui-btn ui-btn-raised clr-primary">Test</a>
-						</div>
-					</div>
 				</div>
-
 			</div>
 		</div>
+
 		<div data-role="page" id="home">
 			<div data-role="panel" id="h-panel" data-display="overlay" data-position-fixed="true" >
 				<nd2-include data-src="panel.left.html"></nd2-include>
@@ -173,6 +159,36 @@
 			</div>
 		</div>
 
+		<div data-role="page" id="test">
+			<div data-role="panel" id="t-panel" data-display="overlay" data-position-fixed="true" >
+				<nd2-include data-src="panel.left.html"></nd2-include>
+			</div>
+			<div data-role="header" data-position="fixed">
+				<a href="#t-panel" class="ui-btn ui-btn-left" ><i class="zmdi zmdi-menu"></i></a>
+				<h1>Phone Accelerometer Test</h1>
+			</div>
+			<div role="main" class="ui-content">
+				<div role="main" class="ui-content" data-inset="false">
+
+					<!-- Simple Card !-->
+					<div class="nd2-card">
+						<div class="card-media">
+							<img src="img/Dragon.jpg">
+						</div>
+						<div class="card-supporting-text">
+							<p>Phone Accelerometer tester</b>
+							</p>
+							<div id="phone-test-result">
+							</div>
+							<div id="phone-test-result2">
+							</div>
+							<a name="test-phone" class="ui-btn ui-btn-raised clr-primary">Test</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
@@ -203,13 +219,12 @@
 			$(document).on("click","a[name='test-phone']", function() { requestDeviceOrientation(); });
 			$('#logo path:eq(1)').on("click", function() { $("body").pagecontainer( "change", "#swimming-dragon"); });
 			$('#logo path:eq(1)')
-			//$('#logo path:eq(1)').on("click", function() { $("body").pagecontainer( "change", "#standing-stake"); });
 
 			function setPhoneTestResult(msg) {
 
 			}
 			function handleOrientation(e) {
-				$("#phone-test-result2").html("Read data from Accelerometer:"+
+				$("#phone-test-result2").delay(1000).html("Read data from Accelerometer:"+
 									"<br />Alpha:" +event.alpha +
 									"<br />Beta:" +event.beta +
 									"<br />Gamma:" +event.gamma
@@ -249,11 +264,10 @@
 					{
 						case "home":
 							break;
-						case "welcome": 
+						case "test": 
 							window.removeEventListener("deviceorientation", handleOrientation);
 							break;
-						case "standing-stake":
-							timer.stop();
+						case "welcome": 
 							break;
 						case "swimming-dragon":
 							sd.reset();
@@ -269,10 +283,10 @@
 					{
 						case "home":
 							break;
+						case "test":
+							break;
 						case "welcome": 
 							break;
-						case "standing-stake":
-							timer.stop();
 							break;
 						case "swimming-dragon":
 							sd.reset();
