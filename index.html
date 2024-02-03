@@ -70,6 +70,20 @@
 							<a href="#swimming-dragon" class="ui-btn ui-btn-raised clr-primary">I agree</a>
 						</div>
 					</div>
+					<div class="nd2-card">
+						<div class="card-media">
+							<img src="img/Dragon.jpg">
+						</div>
+						<div class="card-supporting-text">
+							<p>Phone Accelerometer tester</b>
+							</p>
+							<div id="phone-test-result">
+							</div>
+							<div id="phone-test-result2">
+							</div>
+							<a name="test-phone" class="ui-btn ui-btn-raised clr-primary">Test</a>
+						</div>
+					</div>
 				</div>
 
 			</div>
@@ -186,14 +200,45 @@
 			var config=new Config(timer, sd);
 			debug.set("Index", true);
 
-			$('#logo path:eq(0)').on("click", function() { $("body").pagecontainer( "change", "#swimming-dragon"); });
+			$(document).on("click","a[name='test-phone']", function() { requestDeviceOrientation(); });
 			$('#logo path:eq(1)').on("click", function() { $("body").pagecontainer( "change", "#swimming-dragon"); });
+			$('#logo path:eq(1)')
 			//$('#logo path:eq(1)').on("click", function() { $("body").pagecontainer( "change", "#standing-stake"); });
+
+			function setPhoneTestResult(msg) {
+
+			}
+			function handleOrientation(e) {
+				$("#phone-test-result2").html("Read data from Accelerometer:"+
+									"<br />Alpha:" +event.alpha +
+									"<br />Beta:" +event.beta +
+									"<br />Gamma:" +event.gamma
+				);
+			}
+			function requestDeviceOrientation () {
+				if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+					DeviceOrientationEvent.requestPermission()
+					.then(permissionState => {
+						if (permissionState === 'granted') {
+							window.addEventListener('deviceorientation', () => {});
+						}
+						$("#phone-test-result").html("iOS has granted permission to use its Accelerometer");
+					}).catch(() => {
+						$("#phone-test-result").html("iOS cannot access Accelerometer: "+ console.error);
+					});
+				} 
+				$("#phone-test-result2").html("Read data from Accelerometer:"+
+									"<br />Alpha:" +null +
+									"<br />Beta:" +null +
+									"<br />Gamma:" +null
+				);
+				window.addEventListener("deviceorientation", handleOrientation, true);
+			}
+
 			$( document ).ready(function() {
 				var href=$(location).attr('href').split("#");
 				if (href.length>1)
-					window.location.replace(href[0])
-   				console.log( "ready!  "  +$(location).attr('href') );
+					window.location.replace(href[0]);
 			});
 			$("body").on("pagecontainerbeforechange", function(e, ui) {
 				if (!ui.toPage instanceof jQuery) return;
@@ -205,6 +250,7 @@
 						case "home":
 							break;
 						case "welcome": 
+							window.removeEventListener("deviceorientation", handleOrientation);
 							break;
 						case "standing-stake":
 							timer.stop();
