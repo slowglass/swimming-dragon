@@ -214,17 +214,19 @@
 			var logo=new YinYang("#logo", "#c0f", "#004");
 			var sd=new SwimmingDragon("#sd-spinner");
 			var config=new Config(timer, sd);
+			var ts=0;
 			debug.set("Index", true);
 
 			$(document).on("click","a[name='test-phone']", function() { requestDeviceOrientation(); });
 			$('#logo path:eq(1)').on("click", function() { $("body").pagecontainer( "change", "#swimming-dragon"); });
 			$('#logo path:eq(1)')
 
-			function setPhoneTestResult(msg) {
-
-			}
 			function handleOrientation(e) {
-				$("#phone-test-result2").delay(1000).html("Read data from Accelerometer:"+
+				var currentTS = Date.now();
+				if ((currentTS-ts)<1000)
+					return;
+				ts = currentTS
+				$("#phone-test-result2").html("Read data from Accelerometer:"+
 									"<br />Alpha:" +event.alpha +
 									"<br />Beta:" +event.beta +
 									"<br />Gamma:" +event.gamma
